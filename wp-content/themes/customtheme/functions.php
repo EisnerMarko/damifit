@@ -15,3 +15,14 @@ function plp_register_strings() {
     pll_register_string('Home', 'Home');
 }
 add_action('plugins_loaded', 'plp_register_strings');
+
+function damifit_enqueue_iconify() {
+    wp_enqueue_script(
+        'iconify',
+        'https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js',
+        array(),
+        null,
+        true // načíta sa pred </body>
+    );
+}
+add_action('wp_enqueue_scripts', 'damifit_enqueue_iconify');
