@@ -26,3 +26,32 @@ function damifit_enqueue_iconify() {
     );
 }
 add_action('wp_enqueue_scripts', 'damifit_enqueue_iconify');
+
+function theme_scripts() {
+
+    // SWIPER CSS
+    wp_enqueue_style(
+      'swiper-css',
+      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
+    );
+  
+    // SWIPER JS
+    wp_enqueue_script(
+      'swiper-js',
+      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+      array(),
+      null,
+      true
+    );
+  
+    // TVOJ slider JS
+    wp_enqueue_script(
+      'hero-slider',
+      get_template_directory_uri() . '/js/slider.js',
+      array('swiper-js'), // závislosť!
+      null,
+      true
+    );
+  }
+  
+  add_action('wp_enqueue_scripts', 'theme_scripts');
