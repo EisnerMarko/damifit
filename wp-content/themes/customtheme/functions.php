@@ -1,7 +1,20 @@
 <?php
+
 function enqueue_theme_assets() {
-    wp_enqueue_style('styles', get_template_directory_uri() . '/css/style.css', array(), filemtime(get_template_directory() . '/css/style.css'));
-    wp_enqueue_script('scroll-to', get_template_directory_uri() . '/js/scrollTo.js', array(), filemtime(get_template_directory() . '/js/scrollTo.js'), true);
+    wp_enqueue_style(
+        'styles',
+        get_template_directory_uri() . '/css/style.css',
+        array(),
+        filemtime(get_template_directory() . '/css/style.css')
+    );
+
+    wp_enqueue_script(
+        'scroll-to',
+        get_template_directory_uri() . '/js/scrollTo.js',
+        array(),
+        filemtime(get_template_directory() . '/js/scrollTo.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
@@ -11,10 +24,12 @@ function plp_disable_gutenberg() {
 }
 add_action('init', 'plp_disable_gutenberg');
 
+
 function plp_register_strings() {
     pll_register_string('Home', 'Home');
 }
 add_action('plugins_loaded', 'plp_register_strings');
+
 
 function damifit_enqueue_iconify() {
     wp_enqueue_script(
@@ -22,36 +37,47 @@ function damifit_enqueue_iconify() {
         'https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js',
         array(),
         null,
-        true // načíta sa pred </body>
+        true
     );
 }
 add_action('wp_enqueue_scripts', 'damifit_enqueue_iconify');
 
+
+/* 🔥 VŠETKY SCRIPTY NA JEDNOM MIESTE */
 function theme_scripts() {
 
     // SWIPER CSS
     wp_enqueue_style(
-      'swiper-css',
-      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
+        'swiper-css',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css'
     );
-  
+
     // SWIPER JS
     wp_enqueue_script(
-      'swiper-js',
-      'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
-      array(),
-      null,
-      true
+        'swiper-js',
+        'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js',
+        array(),
+        null,
+        true
     );
-  
-    // TVOJ slider JS
+
+    // HERO SLIDER
     wp_enqueue_script(
-      'hero-slider',
-      get_template_directory_uri() . '/js/slider.js',
-      array('swiper-js'), // závislosť!
-      null,
-      true
+        'hero-slider',
+        get_template_directory_uri() . '/js/slider.js',
+        array('swiper-js'),
+        null,
+        true
     );
-  }
-  
-  add_action('wp_enqueue_scripts', 'theme_scripts');
+
+    // ✅ ZONES SCRIPT (SEM PATRÍ)
+    wp_enqueue_script(
+        'zones-script',
+        get_template_directory_uri() . '/js/zones.js',
+        array(),
+        null,
+        true
+    );
+}
+
+add_action('wp_enqueue_scripts', 'theme_scripts');
