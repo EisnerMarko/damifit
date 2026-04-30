@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main class="min-h-screen w-full">
+<main class="min-h-screen w-full bg-[#1E1E1E]">
 
 <section class="w-full">
 
@@ -162,33 +162,33 @@ $page_id = get_option('page_on_front');
 $zones = get_field('zones', $page_id);
 ?>
 
-<section class="mt-[50px] px-[80px]">
+<section class="mt-[30px] sm:mt-[50px] px-[20px] sm:px-[40px] lg:px-[80px]">
 
-  <div class="grid grid-cols-12 gap-[10px]">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-[10px]">
 
     <?php if(!empty($zones) && is_array($zones)): ?>
       
       <?php foreach($zones as $index => $zone): ?>
 
-        <div class="col-span-4">
-        <div 
-  class="zone-card cursor-pointer relative rounded-[10px] overflow-hidden"
-  data-index="<?= $index; ?>"
->
+        <div class="sm:col-span-1 lg:col-span-4">
+  <div 
+    class="zone-card cursor-pointer relative rounded-[10px] overflow-hidden group"
+    data-index="<?= $index; ?>"
+  >
 
-            <?php if(!empty($zone['thumbnail'])): ?>
-              <img 
-                src="<?= esc_url($zone['thumbnail']['url']); ?>" 
-                class="w-full h-[254px] object-cover opacity-60"
-              >
-            <?php endif; ?>
+    <?php if(!empty($zone['thumbnail'])): ?>
+      <img 
+        src="<?= esc_url($zone['thumbnail']['url']); ?>" 
+        class="w-full h-[180px] sm:h-[220px] lg:h-[254px] object-cover opacity-60 group-hover:opacity-100 transition duration-300 pointer-events-none"
+      >
+    <?php endif; ?>
 
-            <div class="absolute bottom-4 left-4 text-white text-[20px] font-bold">
-              <?= esc_html($zone['title']); ?>
-            </div>
+    <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold z-10">
+      <?= esc_html($zone['title']); ?>
+    </div>
 
-          </div>
-        </div>
+  </div>
+</div>
 
       <?php endforeach; ?>
 
@@ -198,58 +198,76 @@ $zones = get_field('zones', $page_id);
 
 </section>
 
-<div id="zone-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center">
+<div id="zone-modal" class="hidden fixed inset-0 bg-[#1E1E1E] z-50 overflow-y-auto">
 
-  <div class="bg-[#2b0f0f] p-10 rounded-xl max-w-[1100px] w-full relative">
+  <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
 
     <!-- CLOSE -->
-    <button id="zone-close" class="absolute top-5 right-5 text-white text-3xl">×</button>
+    <button id="zone-close" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white text-3xl sm:text-4xl z-50">
+      ×
+    </button>
 
     <?php foreach($zones as $index => $zone): ?>
 
       <div class="zone-detail hidden" data-index="<?= $index; ?>">
 
-        <!-- TITLE -->
-        <h2 class="text-white text-[48px] font-bold mb-6">
-          <?= esc_html($zone['title']); ?>
-        </h2>
+        <div class="grid grid-cols-12 gap-y-[30px] lg:gap-x-[60px] items-start">
 
-        <!-- DESCRIPTION -->
-        <p class="text-white text-[16px] mb-6 max-w-[600px]">
-          <?= esc_html($zone['description']); ?>
-        </p>
+          <!-- LEFT -->
+<div class="col-span-12 lg:col-span-6">
 
-        <!-- SUBTITLE -->
-        <h3 class="text-white text-[20px] font-bold mb-4">
-          <?= esc_html($zone['subtitle']); ?>
-        </h3>
+<?php if(!empty($zone['gallery'])): ?>
 
-        <!-- EQUIPMENT -->
-        <p class="text-white mb-6">
-          <?= esc_html($zone['equipment']); ?>
-        </p>
+  <?php $first = $zone['gallery'][0]['image']; ?>
 
-        <!-- GALLERY -->
-        <div class="flex gap-6">
+  <!-- BIG IMAGE -->
+  <img 
+    src="<?= esc_url($first['url']); ?>" 
+    data-index="0"
+    data-full="<?= esc_url($first['url']); ?>"
+    class="zone-image zone-main-image w-full h-[220px] sm:h-[280px] lg:h-[316px] object-cover rounded-[10px] mb-4 cursor-pointer"
+  >
 
-          <?php if(!empty($zone['gallery'])): ?>
+  <!-- THUMBS -->
+  <div class="flex gap-[8px] sm:gap-[10px] flex-wrap">
 
-            <?php 
-              $first = $zone['gallery'][0];
-            ?>
+    <?php foreach($zone['gallery'] as $i => $item): ?>
+      <?php $img = $item['image']; ?>
 
-            <!-- BIG -->
-            <img src="<?= esc_url($first['url']); ?>" class="w-[528px] h-[316px] object-cover rounded-lg">
+      <img 
+        src="<?= esc_url($img['url']); ?>" 
+        data-index="<?= $i; ?>"
+        data-full="<?= esc_url($img['url']); ?>"
+        class="zone-image zone-thumb w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] lg:w-[97px] lg:h-[97px] object-cover rounded-[8px] opacity-60 hover:opacity-100 cursor-pointer transition"
+      >
 
-            <!-- SMALL -->
-            <div class="flex flex-col gap-2">
-              <?php foreach($zone['gallery'] as $i => $img): ?>
-                <?php if($i === 0) continue; ?>
-                <img src="<?= esc_url($img['url']); ?>" class="w-[97px] h-[97px] object-cover rounded-md">
-              <?php endforeach; ?>
-            </div>
+    <?php endforeach; ?>
 
-          <?php endif; ?>
+  </div>
+
+<?php endif; ?>
+
+</div>
+          <!-- RIGHT -->
+          <div class="col-span-12 lg:col-span-6">
+
+            <h2 class="text-white text-[26px] sm:text-[36px] lg:text-[48px] font-bold mb-4 sm:mb-6 leading-tight">
+              <?= esc_html($zone['title']); ?>
+            </h2>
+
+            <p class="text-white text-[14px] sm:text-[16px] mb-5 sm:mb-6 leading-relaxed">
+              <?= esc_html($zone['description']); ?>
+            </p>
+
+            <h3 class="text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold mb-3 sm:mb-4">
+              <?= esc_html($zone['subtitle']); ?>
+            </h3>
+
+            <p class="text-white text-[14px] sm:text-[16px] whitespace-pre-line leading-relaxed">
+              <?= esc_html($zone['equipment']); ?>
+            </p>
+
+          </div>
 
         </div>
 
@@ -259,6 +277,23 @@ $zones = get_field('zones', $page_id);
 
   </div>
 </div>
+
+<div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center">
+
+  <!-- CLOSE -->
+  <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl">×</button>
+
+  <!-- PREV -->
+  <button id="lightbox-prev" class="absolute left-6 text-white text-4xl">←</button>
+
+  <!-- IMAGE -->
+  <img id="lightbox-img" class="max-w-[90%] max-h-[90%] rounded-lg">
+
+  <!-- NEXT -->
+  <button id="lightbox-next" class="absolute right-6 text-white text-4xl">→</button>
+
+</div>
+
 </main>
 
 <?php get_footer(); ?>
