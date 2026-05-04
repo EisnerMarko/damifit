@@ -293,7 +293,7 @@ $zones = get_field('zones', $page_id);
   <button id="lightbox-next" class="absolute right-6 text-white text-4xl">→</button>
 
 </div>
-
+</section>
 <section class="w-full mt-[50px] bg-[#212529]">
 
   <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
@@ -359,6 +359,73 @@ $zones = get_field('zones', $page_id);
 
   </div>
 
+</section>
+
+<section class="flex flex-col items-center text-center justify-center px-16 py-8 max-w-7xl mx-auto">
+        <?php if($testimonials_title = get_field('testimonials_title', $page_id)): ?>
+            <h2 class="text-5xl font-bold mb-4 text-white"><?php echo esc_html($testimonials_title); ?></h2>
+        <?php endif; ?>
+        <?php if($testimonials_text_line = get_field('testimonials_text_line', $page_id)): ?>
+            <h3 class="text-3xl font-bold mb-4 text-white"><?php echo esc_html($testimonials_text_line); ?></h3>
+        <?php endif; ?>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full">
+        <?php
+        $args = [
+            'post_type' => 'testimonial',
+            'posts_per_page' => 6,
+            'orderby' => 'rand'
+        ];
+        $testimonials = new WP_Query($args);
+        if ($testimonials->have_posts()):
+            while ($testimonials->have_posts()): $testimonials->the_post();
+                $name = get_field('testimonial_name', $page_id) ?: get_the_title();
+                $rating = get_field('testimonial_rating', $page_id) ?: 5;
+        ?>
+        <div class="p-8 flex flex-col items-center">
+            <div class="text-white text-center"><?php the_content(); ?></div>
+            <div class="mt-4 flex flex-row items-center">
+                <h4 class="font-bold text-xl mr-2 text-white"><?php echo esc_html($name); ?></h4>
+                <div class="flex mb-2">
+                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                        <span class="iconify text-2xl <?php echo $i <= $rating ? 'text-yellow-500' : 'text-gray-300'; ?>" data-icon="mdi:star"></span>
+                    <?php endfor; ?>
+                </div>
+            </div>
+        </div>
+        <?php endwhile; wp_reset_postdata(); endif; ?>
+    </div>
+</section>
+
+<section class="max-w-2xl px-16 py-8 max-w-7xl mx-auto">
+    <h3 class="text-2xl font-bold mb-4 text-white"><?php pll_e("Submit")?></h3>
+
+    <?php if ( is_user_logged_in() ): ?>
+        <form action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" method="POST" enctype="multipart/form-data" class="bg-white p-8 rounded-xl shadow space-y-4 max-w-lg mx-auto">
+            <input type="hidden" name="action" value="submit_testimonial">
+            <?php wp_nonce_field( 'submit_testimonial_action', 'testimonial_nonce' ); ?>
+            <label for="testimonial_name" class="block font-bold mb-1"><?php pll_e("Name")?></label>
+            <input type="text" name="testimonial_name" id="testimonial_name" required class="w-full border p-2 rounded mb-4" />
+            <label for="testimonial_rating" class="block font-bold mb-1"><?php pll_e("Rating")?></label>
+            <input type="number" name="testimonial_rating" id="testimonial_rating" min="1" max="5" required class="w-full border p-2 rounded mb-4" />
+            <label for="testimonial_content" class="block font-bold mb-1"><?php pll_e("Text")?></label>
+            <textarea name="testimonial_content" id="testimonial_content" required class="w-full border p-2 rounded mb-4"></textarea>
+            <input type="submit" value=<?php pll_e("Button")?> class="bg-orange-400 text-white font-bold px-6 py-2 rounded hover:bg-orange-500 transition" />
+        </form>
+    <?php else: ?>
+        <p class="mt-4 text-black">
+            <?php pll_e("Submition")?>:
+            <a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>" class="text-blue-600 underline"><?php pll_e("Log In")?></a>
+            or
+            <a href="<?php echo esc_url( wp_registration_url() ); ?>" class="text-blue-600 underline"><?php pll_e("Register")?>:</a>
+        </p>
+    <?php endif; ?>
+
+    <?php
+    if (isset($_GET['testimonial']) && $_GET['testimonial'] === 'success') {
+        echo '<p class="mt-4 text-green-600 font-bold">Thank you for your testimonial! It will appear after review.</p>';
+    }
+    ?>
 </section>
 
 </main>
