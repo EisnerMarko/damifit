@@ -294,6 +294,73 @@ $zones = get_field('zones', $page_id);
 
 </div>
 
+<section class="w-full mt-[50px] bg-[#212529]">
+
+  <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
+
+    <!-- GRID -->
+    <div class="grid grid-cols-12 gap-y-[40px] gap-x-[30px] md:gap-x-[60px] lg:gap-x-[80px] items-center">
+
+      <!-- LEFT -->
+      <div class="col-span-12 lg:col-span-6">
+
+        <!-- small title -->
+        <p class="text-white text-[14px] sm:text-[16px] italic font-light mb-2">
+          <?php the_field('small_title', $page_id); ?>
+        </p>
+
+        <!-- title -->
+        <h2 class="text-white text-[26px] sm:text-[32px] font-bold mb-6">
+          <?php the_field('title', $page_id); ?>
+        </h2>
+
+        <!-- text -->
+        <p class="text-white text-[14px] sm:text-[16px] leading-relaxed mb-8 max-w-[600px]">
+          <?php the_field('description', $page_id); ?>
+        </p>
+
+        <!-- button -->
+        <?php 
+          $btn_link = get_field('button_link', $page_id);
+          $btn_text = get_field('button_text', $page_id);
+        ?>
+
+        <?php if($btn_link && $btn_text): ?>
+          <div class="mt-6">
+            <a href="<?= esc_url($btn_link); ?>"
+               class="inline-flex items-center justify-center 
+               w-[180px] h-[48px] sm:w-[195px] sm:h-[52px] md:w-[205px] md:h-[56px] 
+               bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md">
+              <?= esc_html($btn_text); ?>
+            </a>
+          </div>
+        <?php endif; ?>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-span-12 lg:col-span-6 flex justify-center lg:justify-end">
+
+        <div class="w-full max-w-[635px] aspect-[635/286]">
+
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2663.5046001024743!2d17.109079876502378!3d48.119791552399114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c89dfb849fb01%3A0x62c83ab91930b6bf!2sDamifit!5e0!3m2!1ssk!2sdk!4v1777891151774!5m2!1ssk!2sdk"
+            class="w-full h-full rounded-[10px]"
+            style="border:0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
 </main>
 
 <?php get_footer(); ?>
