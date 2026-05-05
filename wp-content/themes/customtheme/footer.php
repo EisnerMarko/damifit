@@ -20,10 +20,20 @@
         <p><strong>So - Ne:</strong> 8:00 - 20:00</p>
       </div>
 
-      <div class="flex gap-4 pt-2">
-        <span class="text-[26px] md:text-[30px]"><iconify-icon icon="mdi:instagram"></iconify-icon></span>
-        <span class="text-[26px] md:text-[30px]"><iconify-icon icon="mdi:facebook"></iconify-icon></span>
-      </div>
+        <div class="flex gap-4 pt-2">
+    <a href="https://www.instagram.com/_damifit_/" target="_blank" rel="noopener noreferrer">
+      <span class="text-[26px] md:text-[30px]">
+        <iconify-icon icon="mdi:instagram"></iconify-icon>
+      </span>
+    </a>
+
+    <a href="https://www.facebook.com/PosilnovnaDamifit/" target="_blank" rel="noopener noreferrer">
+      <span class="text-[26px] md:text-[30px]">
+        <iconify-icon icon="mdi:facebook"></iconify-icon>
+      </span>
+    </a>
+  </div>
+
 
     </div>
 
@@ -77,9 +87,9 @@
       </h3>
 
       <div class="font-[Ubuntu] text-[15px] md:text-[16px] space-y-3">
-        <a href="#" class="block hover:underline">Obchodné Podmienky</a>
-        <a href="#" class="block hover:underline">Ochrana Osobných Údajov</a>
-        <a href="#" class="block hover:underline">Nastavenia Cookies</a>
+        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Obchodné Podmienky</a>
+        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Ochrana Osobných Údajov</a>
+        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Nastavenia Cookies</a>
       </div>
 
     </div>
@@ -92,12 +102,14 @@
       </h3>
 
       <div class="font-[Ubuntu] text-[15px] md:text-[16px] space-y-3">
-        <a href="#" class="block hover:underline">Cenník</a>
-        <a href="#" class="block hover:underline">Kontakt</a>
-        <a href="#" class="block hover:underline">O Nás</a>
-        <a href="#" class="block hover:underline">DamiFood</a>
-      </div>
-
+  <a href="<?php echo esc_url(get_permalink(get_page_by_path('cennik'))); ?>" class="block hover:underline hover:text-[#00A8E8]">Cenník</a>
+  
+  <a href="<?php echo esc_url(get_permalink(get_page_by_path('kontakt'))); ?>" class="block hover:underline hover:text-[#00A8E8]">Kontakt</a>
+  
+  <a href="<?php echo esc_url(get_permalink(get_page_by_path('personal'))); ?>" class="block hover:underline hover:text-[#00A8E8]">Personál</a>
+  
+  <a href="<?php echo esc_url(get_permalink(get_page_by_path('damifood'))); ?>" class="block hover:underline hover:text-[#00A8E8]">DamiFood</a>
+</div>
     </div>
 
   </div>
