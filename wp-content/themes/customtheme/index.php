@@ -339,9 +339,9 @@ $zones = get_field('zones', $page_id);
       </div>
 
       <!-- RIGHT -->
-      <div class="col-span-12 lg:col-span-6 flex justify-center lg:justify-end">
+      <div class="col-span-12 lg:col-span-6">
 
-        <div class="w-full max-w-[635px] aspect-[635/286]">
+        <div class="w-full h-[280px] sm:h-[400px] lg:h-[520px]">
 
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2663.5046001024743!2d17.109079876502378!3d48.119791552399114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c89dfb849fb01%3A0x62c83ab91930b6bf!2sDamifit!5e0!3m2!1ssk!2sdk!4v1777891151774!5m2!1ssk!2sdk"
@@ -363,7 +363,7 @@ $zones = get_field('zones', $page_id);
 
 <section class="flex flex-col items-center text-center justify-center px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
         <?php if($testimonials_title = get_field('testimonials_title', $page_id)): ?>
-            <h2 class="text-5xl font-bold mb-2 text-white"><?php echo esc_html($testimonials_title); ?></h2>
+            <h2 class="text-5xl font-bold mb-4 text-white"><?php echo esc_html($testimonials_title); ?></h2>
         <?php endif; ?>
         <?php if($testimonials_text_line = get_field('testimonials_text_line', $page_id)): ?>
             <h3 class="text-3xl mb-4 text-white"><?php echo esc_html($testimonials_text_line); ?></h3>
