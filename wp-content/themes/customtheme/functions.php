@@ -153,10 +153,69 @@ function damifit_register_testimonial_cpt() {
         'public' => true,
         'capability_type' => 'testimonial',
         'has_archive' => false,
-        'supports' => ['title', 'editor', 'thumbnail'],
+        'supports' => ['title', 'editor', 'thumbnail', 'custom-fields'],
     ]);
 }
 add_action('init', 'damifit_register_testimonial_cpt');
+
+function damifit_add_testimonial_meta_boxes() {
+    add_meta_box(
+        'damifit_testimonial_meta',
+        'Testimonial details',
+        'damifit_render_testimonial_meta_box',
+        'testimonial',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'damifit_add_testimonial_meta_boxes');
+
+function damifit_render_testimonial_meta_box( $post ) {
+    wp_nonce_field( 'damifit_save_testimonial_meta', 'damifit_testimonial_meta_nonce' );
+
+    $name = get_post_meta( $post->ID, 'testimonial_name', true );
+    $rating = get_post_meta( $post->ID, 'testimonial_rating', true );
+    $rating = $rating ? intval( $rating ) : 5;
+    ?>
+    <p>
+        <label for="testimonial_name"><strong>Name</strong></label><br />
+        <input type="text" id="testimonial_name" name="testimonial_name" value="<?php echo esc_attr( $name ); ?>" class="widefat" />
+    </p>
+    <p>
+        <label for="testimonial_rating"><strong>Rating</strong></label><br />
+        <input type="number" id="testimonial_rating" name="testimonial_rating" min="1" max="5" value="<?php echo esc_attr( $rating ); ?>" class="small-text" />
+    </p>
+    <?php
+}
+
+function damifit_save_testimonial_meta( $post_id ) {
+    if ( ! isset( $_POST['damifit_testimonial_meta_nonce'] ) ) {
+        return;
+    }
+
+    if ( ! wp_verify_nonce( $_POST['damifit_testimonial_meta_nonce'], 'damifit_save_testimonial_meta' ) ) {
+        return;
+    }
+
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    if ( isset( $_POST['testimonial_name'] ) ) {
+        update_post_meta( $post_id, 'testimonial_name', sanitize_text_field( wp_unslash( $_POST['testimonial_name'] ) ) );
+    }
+
+    if ( isset( $_POST['testimonial_rating'] ) ) {
+        $rating = intval( $_POST['testimonial_rating'] );
+        $rating = min( 5, max( 1, $rating ) );
+        update_post_meta( $post_id, 'testimonial_rating', $rating );
+    }
+}
+add_action( 'save_post_testimonial', 'damifit_save_testimonial_meta' );
 
 add_filter('use_block_editor_for_post_type', function($use_block_editor, $post_type) {
     if ($post_type === 'testimonial') {
