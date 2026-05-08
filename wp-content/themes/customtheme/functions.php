@@ -255,3 +255,50 @@ function damifit_testimonial_caps() {
     }
 }
 add_action('init', 'damifit_testimonial_caps');
+
+add_action('admin_post_nopriv_custom_contact_form', 'handle_custom_contact_form');
+add_action('admin_post_custom_contact_form', 'handle_custom_contact_form');
+
+function handle_custom_contact_form() {
+
+    if (
+        !isset($_POST['custom_contact_nonce']) ||
+        !wp_verify_nonce($_POST['custom_contact_nonce'], 'custom_contact_form_action')
+    ) {
+        wp_die('Security check failed');
+    }
+
+    $name = sanitize_text_field($_POST['name']);
+    $email = sanitize_email($_POST['email']);
+    $phone = sanitize_text_field($_POST['phone']);
+    $service = sanitize_text_field($_POST['service']);
+    $message = sanitize_textarea_field($_POST['message']);
+
+    $to = 'admin@markosdesign.com'; // CHNAGE MAIL
+
+    $subject = 'Nový kontaktný formulár';
+
+    $body = "
+    Meno: $name
+
+    Email: $email
+
+    Telefón: $phone
+
+    Služba: $service
+
+    Správa:
+    $message
+    ";
+
+    $headers = [
+        'Content-Type: text/plain; charset=UTF-8',
+        'Reply-To: ' . $email,
+        'From: Damifit Web <admin@markosdesign.com>' // CHNAGE MAIL
+    ];
+
+    wp_mail($to, $subject, $body, $headers);
+
+    wp_redirect( add_query_arg('contact', 'success', wp_get_referer()) );
+    exit;
+}
