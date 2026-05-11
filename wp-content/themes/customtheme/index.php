@@ -157,6 +157,8 @@
     <div class="swiper-pagination"></div>
 
   </div>
+  </section>
+
   <?php
 $page_id = get_option('page_on_front');
 $zones = get_field('zones', $page_id);
@@ -293,7 +295,7 @@ $zones = get_field('zones', $page_id);
   <button id="lightbox-next" class="absolute right-6 text-white text-4xl">→</button>
 
 </div>
-</section>
+
 <section class="w-full mt-[50px] bg-[#212529]">
 
   <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
