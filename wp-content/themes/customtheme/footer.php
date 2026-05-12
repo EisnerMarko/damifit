@@ -86,11 +86,19 @@
         Ochrana Údajov
       </h3>
 
-      <div class="font-[Ubuntu] text-[15px] md:text-[16px] space-y-3">
-        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Obchodné Podmienky</a>
-        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Ochrana Osobných Údajov</a>
-        <a href="#" class="block hover:underline hover:text-[#00A8E8]">Nastavenia Cookies</a>
-      </div>
+          <div class="font-[Ubuntu] text-[15px] md:text-[16px] space-y-3">
+      <a href="/obchodne-podmienky" class="block hover:underline hover:text-[#00A8E8]">
+        Obchodné Podmienky
+      </a>
+
+      <a href="/ochrana-osobnych-udajov" class="block hover:underline hover:text-[#00A8E8]">
+        Ochrana Osobných Údajov
+      </a>
+
+      <a href="/nastavenia-cookies" class="block hover:underline hover:text-[#00A8E8]">
+        Nastavenia Cookies
+      </a>
+    </div>
 
     </div>
 

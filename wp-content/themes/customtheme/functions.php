@@ -50,7 +50,7 @@ function damifit_enqueue_iconify() {
 add_action('wp_enqueue_scripts', 'damifit_enqueue_iconify');
 
 
-/* 🔥 VŠETKY SCRIPTY NA JEDNOM MIESTE */
+/* SCRIPTS*/
 function theme_scripts() {
 
     // SWIPER CSS
@@ -77,7 +77,7 @@ function theme_scripts() {
         true
     );
 
-    // ✅ ZONES SCRIPT (SEM PATRÍ)
+    // ZONES SCRIPT
     wp_enqueue_script(
         'zones-script',
         get_template_directory_uri() . '/js/zones.js',

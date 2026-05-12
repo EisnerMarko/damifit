@@ -44,9 +44,14 @@ $persons = [
         <?php endif; ?>
 
         <div class="flex items-center gap-3 leading-none">
-          <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
-          <span><?= $person['phone']; ?></span>
-        </div>
+        <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
+
+        <a
+          href="tel:<?= preg_replace('/\s+/', '', $person['phone']); ?>"
+          class="hover:text-white transition">
+          <?= $person['phone']; ?>
+        </a>
+      </div>
 
       </div>
 
@@ -60,10 +65,14 @@ $persons = [
         <?php endif; ?>
 
         <div class="flex items-center gap-3 leading-none">
-          <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
-          <span class="break-all"><?= $person['email']; ?></span>
-        </div>
+        <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
 
+        <a
+          href="mailto:<?= $person['email']; ?>"
+          class="break-all hover:text-white transition">
+          <?= $person['email']; ?>
+        </a>
+      </div>
       </div>
 
     </div>
@@ -116,26 +125,44 @@ $persons = [
         <!-- CONTACT -->
         <div class="flex flex-col gap-[10px] mt-[10px]">
 
-          <?php if(get_sub_field('phone')): ?>
-            <div class="flex items-center gap-3">
-              <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white"></iconify-icon>
-              <span><?= get_sub_field('phone'); ?></span>
-            </div>
-          <?php endif; ?>
+        <?php if(get_sub_field('phone')): ?>
+        <div class="flex items-center gap-3">
+          <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white"></iconify-icon>
 
-          <?php if(get_sub_field('email')): ?>
-            <div class="flex items-center gap-3">
-              <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white"></iconify-icon>
-              <span class="break-all"><?= get_sub_field('email'); ?></span>
-            </div>
-          <?php endif; ?>
+          <a
+            href="tel:<?= preg_replace('/\s+/', '', get_sub_field('phone')); ?>"
+            class="hover:text-white transition">
+            <?= get_sub_field('phone'); ?>
+          </a>
+        </div>
+      <?php endif; ?>
 
-          <?php if(get_sub_field('instagram')): ?>
-            <div class="flex items-center gap-3">
-              <iconify-icon icon="mdi:instagram" class="w-[20px] h-[20px] text-white"></iconify-icon>
-              <span><?= get_sub_field('instagram'); ?></span>
-            </div>
-          <?php endif; ?>
+      <?php if(get_sub_field('email')): ?>
+        <div class="flex items-center gap-3">
+          <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white"></iconify-icon>
+
+          <a
+            href="mailto:<?= get_sub_field('email'); ?>"
+            class="break-all hover:text-white transition">
+            <?= get_sub_field('email'); ?>
+          </a>
+        </div>
+      <?php endif; ?>
+
+      <?php if(get_sub_field('instagram') && get_sub_field('instagram_link')): ?>
+        <div class="flex items-center gap-3">
+          <iconify-icon icon="mdi:instagram" class="w-[20px] h-[20px] text-white"></iconify-icon>
+
+          <a
+            href="<?= get_sub_field('instagram_link'); ?>"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-white transition"
+          >
+            <?= get_sub_field('instagram'); ?>
+          </a>
+        </div>
+      <?php endif; ?>
 
         </div>
 

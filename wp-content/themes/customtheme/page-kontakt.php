@@ -97,35 +97,45 @@ $sections = [
         <!-- SOCIALS -->
         <div class="flex flex-wrap items-center gap-x-[28px] gap-y-[18px] pt-[8px]">
 
-          <?php if(!empty($section['instagram_name'])): ?>
-          <div class="flex items-center gap-4">
+        <?php if(!empty($section['instagram_name']) && !empty($section['instagram_link'])): ?>
+        <div class="flex items-center gap-4">
 
-            <iconify-icon
-              icon="mdi:instagram"
-              class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
-            </iconify-icon>
+          <iconify-icon
+            icon="mdi:instagram"
+            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+          </iconify-icon>
 
-            <span class="text-[17px] md:text-[18px] text-gray-200">
-              <?= $section['instagram_name']; ?>
-            </span>
+          <a
+            href="<?= $section['instagram_link']; ?>"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[17px] md:text-[18px] text-gray-200 hover:text-white transition"
+          >
+            <?= $section['instagram_name']; ?>
+          </a>
 
-          </div>
-          <?php endif; ?>
+        </div>
+        <?php endif; ?>
 
-          <?php if(!empty($section['facebook_name'])): ?>
-          <div class="flex items-center gap-4">
+        <?php if(!empty($section['facebook_name']) && !empty($section['facebook_link'])): ?>
+        <div class="flex items-center gap-4">
 
-            <iconify-icon
-              icon="ic:baseline-facebook"
-              class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
-            </iconify-icon>
+          <iconify-icon
+            icon="ic:baseline-facebook"
+            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+          </iconify-icon>
 
-            <span class="text-[17px] md:text-[18px] text-gray-200">
-              <?= $section['facebook_name']; ?>
-            </span>
+          <a
+            href="<?= $section['facebook_link']; ?>"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[17px] md:text-[18px] text-gray-200 hover:text-white transition"
+          >
+            <?= $section['facebook_name']; ?>
+          </a>
 
-          </div>
-          <?php endif; ?>
+        </div>
+        <?php endif; ?>
 
         </div>
 
