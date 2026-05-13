@@ -159,12 +159,184 @@
   </div>
   </section>
 
-  <?php
+  <?php if ( class_exists( 'WooCommerce' ) ) : ?>
+    <?php
+      $top_products = new WP_Query([
+        'post_type' => 'product',
+        'posts_per_page' => 5,
+        'tax_query' => [
+          [
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => ['permanentky'],
+            'operator' => 'IN',
+          ],
+        ],
+      ]);
+
+      if ( ! $top_products->have_posts() ) {
+        wp_reset_postdata();
+        $top_products = new WP_Query([
+          'post_type' => 'product',
+          'posts_per_page' => 5,
+          'orderby' => 'date',
+          'order' => 'DESC',
+        ]);
+      }
+    ?>
+
+    <?php if ( $top_products->have_posts() ) : ?>
+      <section class="px-[20px] sm:px-[40px] lg:px-[80px] mt-[50px]">
+
+        <div class="text-center mb-[40px]">
+          <h2 class="text-white text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-tight">
+            ZMENA
+          </h2>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+          <?php while ( $top_products->have_posts() ) : $top_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
+            <a href="<?= esc_url( get_permalink() ); ?>" class="group block rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
+              <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
+              <h3 class="text-white text-[18px] md:text-[20px] font-semibold mb-4 leading-tight">
+                <?= esc_html( get_the_title() ); ?>
+              </h3>
+              <div class="text-white text-[28px] md:text-[32px] font-bold mb-4">
+                <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
+              </div>
+              <?php if ( $product && $product->get_short_description() ) : ?>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  <?= wp_kses_post( wp_trim_words( $product->get_short_description(), 16, '...' ) ); ?>
+                </p>
+              <?php else : ?>
+                <p class="text-gray-400 text-sm leading-relaxed">Začnite pracovať na sebe už dnes pre lepší zajtrajšok.</p>
+              <?php endif; ?>
+            </a>
+          <?php endwhile; wp_reset_postdata(); ?>
+        </div>
+      </section>
+    <?php endif; ?>
+
+    <?php
+      $plan_products = new WP_Query([
+        'post_type' => 'product',
+        'posts_per_page' => 2,
+        'tax_query' => [
+          [
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => ['stravovaci-plan', 'meal-plan', 'plans'],
+            'operator' => 'IN',
+          ],
+        ],
+      ]);
+
+      if ( ! $plan_products->have_posts() ) {
+        wp_reset_postdata();
+        $plan_products = new WP_Query([
+          'post_type' => 'product',
+          'posts_per_page' => 2,
+          'orderby' => 'date',
+          'order' => 'DESC',
+        ]);
+      }
+    ?>
+
+    <?php if ( $plan_products->have_posts() ) : ?>
+      <section class="px-[20px] sm:px-[40px] lg:px-[80px] mt-[30px]">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <?php while ( $plan_products->have_posts() ) : $plan_products->the_post(); $image = get_the_post_thumbnail_url( get_the_ID(), 'large' ); ?>
+            <a href="<?= esc_url( get_permalink() ); ?>" class="group block relative overflow-hidden rounded-[20px] min-h-[240px] bg-[#1E1E1E] shadow-lg">
+              <?php if ( $image ) : ?>
+                <img src="<?= esc_url( $image ); ?>" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" alt="<?= esc_attr( get_the_title() ); ?>">
+              <?php endif; ?>
+              <div class="absolute inset-0 bg-black/40"></div>
+              <div class="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+                <p class="text-white text-[12px] uppercase tracking-[0.35em] mb-3">DAMIFIT</p>
+                <h3 class="text-white text-[28px] md:text-[34px] font-bold leading-tight">
+                  <?= esc_html( get_the_title() ); ?>
+                </h3>
+              </div>
+            </a>
+          <?php endwhile; wp_reset_postdata(); ?>
+        </div>
+      </section>
+    <?php endif; ?>
+  <?php endif; ?>
+
+<section class="w-full mt-[50px] bg-[#212529]">
+
+  <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
+
+    <!-- GRID -->
+    <div class="grid grid-cols-12 gap-y-[40px] gap-x-[30px] md:gap-x-[60px] lg:gap-x-[80px] items-center">
+
+      <!-- LEFT -->
+      <div class="col-span-12 lg:col-span-6">
+
+        <!-- small title -->
+        <p class="text-white text-[14px] sm:text-[16px] italic font-light mb-2">
+          <?php the_field('small_title', $page_id); ?>
+        </p>
+
+        <!-- title -->
+        <h2 class="text-white text-[26px] sm:text-[32px] font-bold mb-6">
+          <?php the_field('title', $page_id); ?>
+        </h2>
+
+        <!-- text -->
+        <p class="text-white text-[14px] sm:text-[16px] leading-relaxed mb-8 max-w-[600px]">
+          <?php the_field('description', $page_id); ?>
+        </p>
+
+        <!-- button -->
+        <?php 
+          $btn_link = get_field('button_link', $page_id);
+          $btn_text = get_field('button_text', $page_id);
+        ?>
+
+        <?php if($btn_link && $btn_text): ?>
+          <div class="mt-6">
+            <a href="<?= esc_url($btn_link); ?>"
+               class="inline-flex items-center justify-center 
+               w-[180px] h-[48px] sm:w-[195px] sm:h-[52px] md:w-[205px] md:h-[56px] 
+               bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md hover:bg-[#0096cf]">
+              <?= esc_html($btn_text); ?>
+            </a>
+          </div>
+        <?php endif; ?>
+
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-span-12 lg:col-span-6">
+
+        <div class="w-full h-[280px] sm:h-[400px] lg:h-[520px]">
+
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2663.5046001024743!2d17.109079876502378!3d48.119791552399114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c89dfb849fb01%3A0x62c83ab91930b6bf!2sDamifit!5e0!3m2!1ssk!2sdk!4v1777891151774!5m2!1ssk!2sdk"
+            class="w-full h-full rounded-[10px]"
+            style="border:0;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<?php
 $page_id = get_option('page_on_front');
 $zones = get_field('zones', $page_id);
 ?>
 
-<section class="mt-[30px] sm:mt-[50px] px-[20px] sm:px-[40px] lg:px-[80px]">
+<section class="pb-[30px] sm:pb-[50px] px-[20px] sm:px-[40px] lg:px-[80px] bg-[#212529]">
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-[10px]">
 
@@ -181,7 +353,7 @@ $zones = get_field('zones', $page_id);
     <?php if(!empty($zone['thumbnail'])): ?>
       <img 
         src="<?= esc_url($zone['thumbnail']['url']); ?>" 
-        class="w-full h-[180px] sm:h-[220px] lg:h-[254px] object-cover opacity-60 group-hover:opacity-100 transition duration-300 pointer-events-none"
+        class="w-full h-[180px] sm:h-[220px] lg:h-[254px] object-cover opacity-50 group-hover:opacity-100 transition duration-300 pointer-events-none"
       >
     <?php endif; ?>
 
@@ -205,7 +377,7 @@ $zones = get_field('zones', $page_id);
   <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
 
     <!-- CLOSE -->
-    <button id="zone-close" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white text-3xl sm:text-4xl z-50">
+    <button id="zone-close" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white text-3xl sm:text-4xl z-50 cursor-pointer">
       ×
     </button>
 
@@ -295,73 +467,6 @@ $zones = get_field('zones', $page_id);
   <button id="lightbox-next" class="absolute right-6 text-white text-4xl">→</button>
 
 </div>
-
-<section class="w-full mt-[50px] bg-[#212529]">
-
-  <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
-
-    <!-- GRID -->
-    <div class="grid grid-cols-12 gap-y-[40px] gap-x-[30px] md:gap-x-[60px] lg:gap-x-[80px] items-center">
-
-      <!-- LEFT -->
-      <div class="col-span-12 lg:col-span-6">
-
-        <!-- small title -->
-        <p class="text-white text-[14px] sm:text-[16px] italic font-light mb-2">
-          <?php the_field('small_title', $page_id); ?>
-        </p>
-
-        <!-- title -->
-        <h2 class="text-white text-[26px] sm:text-[32px] font-bold mb-6">
-          <?php the_field('title', $page_id); ?>
-        </h2>
-
-        <!-- text -->
-        <p class="text-white text-[14px] sm:text-[16px] leading-relaxed mb-8 max-w-[600px]">
-          <?php the_field('description', $page_id); ?>
-        </p>
-
-        <!-- button -->
-        <?php 
-          $btn_link = get_field('button_link', $page_id);
-          $btn_text = get_field('button_text', $page_id);
-        ?>
-
-        <?php if($btn_link && $btn_text): ?>
-          <div class="mt-6">
-            <a href="<?= esc_url($btn_link); ?>"
-               class="inline-flex items-center justify-center 
-               w-[180px] h-[48px] sm:w-[195px] sm:h-[52px] md:w-[205px] md:h-[56px] 
-               bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md hover:bg-[#0096cf]">
-              <?= esc_html($btn_text); ?>
-            </a>
-          </div>
-        <?php endif; ?>
-
-      </div>
-
-      <!-- RIGHT -->
-      <div class="col-span-12 lg:col-span-6">
-
-        <div class="w-full h-[280px] sm:h-[400px] lg:h-[520px]">
-
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2663.5046001024743!2d17.109079876502378!3d48.119791552399114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x476c89dfb849fb01%3A0x62c83ab91930b6bf!2sDamifit!5e0!3m2!1ssk!2sdk!4v1777891151774!5m2!1ssk!2sdk"
-            class="w-full h-full rounded-[10px]"
-            style="border:0;"
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
 
 <section class="flex flex-col items-center text-center justify-center px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
         <?php if($testimonials_title = get_field('testimonials_title', $page_id)): ?>
