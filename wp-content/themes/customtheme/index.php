@@ -445,7 +445,7 @@ $zones = get_field('zones', $page_id);
                 <textarea name="testimonial_content" id="testimonial_content" required class="w-full p-2 rounded-[10px] min-h-[120px] bg-[#495057] pl-4" placeholder="<?php pll_e("Text recenzie")?>"></textarea>
             </div>
             <div class="flex justify-center">
-                <input type="submit" value=<?php pll_e("Odoslať")?> class="bg-[#00A8E8] text-white font-bold px-20 py-2 rounded-[10px] hover:bg-orange-500 transition" />
+                <input type="submit" value=<?php pll_e("Odoslať")?> class="bg-[#00A8E8] text-white font-bold px-20 py-2 rounded-[10px] hover:bg-orange-500 transition cursor-pointer" />
             </div>
         </form>
     <?php else: ?>

@@ -46,7 +46,7 @@ $sections = [
 
           <iconify-icon
             icon="ic:baseline-phone"
-            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+            class="text-white relative top-[1px] shrink-0 text-[22px] md:text-[42px]">
           </iconify-icon>
 
           <a
@@ -65,7 +65,7 @@ $sections = [
 
           <iconify-icon
             icon="ic:outline-email"
-            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+            class="text-white relative top-[1px] shrink-0 text-[22px] md:text-[42px]">
           </iconify-icon>
 
           <a
@@ -84,7 +84,7 @@ $sections = [
 
           <iconify-icon
             icon="mdi:map-marker-outline"
-            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+            class="text-white relative top-[1px] shrink-0 text-[22px] md:text-[42px]">
           </iconify-icon>
 
           <span class="text-[17px] md:text-[18px] text-gray-200 leading-[1.6]">
@@ -102,7 +102,7 @@ $sections = [
 
           <iconify-icon
             icon="mdi:instagram"
-            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+            class="text-white relative top-[1px] shrink-0 text-[22px] md:text-[42px]">
           </iconify-icon>
 
           <a
@@ -122,7 +122,7 @@ $sections = [
 
           <iconify-icon
             icon="ic:baseline-facebook"
-            class="w-[22px] h-[22px] md:w-[24px] md:h-[24px] text-white relative top-[1px] shrink-0">
+            class="text-white relative top-[1px] shrink-0 text-[22px] md:text-[42px]">
           </iconify-icon>
 
           <a
@@ -154,7 +154,7 @@ $sections = [
 $kontakt_image = get_field('kontakt_image');
 ?>
 
-<section class="pb-[50px] px-[20px] md:px-[40px] lg:px-0">
+<section class="px-[20px] sm:px-[40px] lg:px-[80px] pb-[50px]">
 
   <div class="grid grid-cols-1 lg:grid-cols-12 gap-[10px] md:gap-[20px] lg:gap-[10px]">
 
