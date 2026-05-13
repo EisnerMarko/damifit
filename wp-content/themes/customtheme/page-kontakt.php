@@ -36,7 +36,7 @@ $sections = [
     <!-- CONTACT -->
     <div class="<?= $section['reverse_layout']
       ? 'lg:col-start-1 lg:col-span-4 lg:row-start-1'
-      : 'lg:col-start-8 lg:col-span-4 lg:row-start-1'; ?> flex justify-start lg:justify-center">
+      : 'lg:col-start-8 lg:col-span-4 lg:row-start-1'; ?> flex justify-start">
 
       <div class="flex flex-col gap-[24px] md:gap-[28px] lg:gap-[30px] w-full max-w-[420px]">
 

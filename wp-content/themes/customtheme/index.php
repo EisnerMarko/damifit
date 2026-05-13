@@ -46,7 +46,7 @@
                 <div class="mt-6 flex justify-center">
                   <a href="<?php the_sub_field('hero_button_link'); ?>" 
                      class="inline-flex items-center justify-center w-[180px] h-[48px] sm:w-[195px] sm:h-[52px] 
-                     md:w-[205px] md:h-[56px] bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md">
+                     md:w-[205px] md:h-[56px] bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md hover:bg-[#0096cf]">
                     <?php the_sub_field('hero_button_text'); ?>
                   </a>
                 </div>
@@ -69,7 +69,7 @@
                 <div class="mt-6 flex justify-center">
                   <a href="<?php the_sub_field('hero_button_link'); ?>" 
                      class="inline-flex items-center justify-center w-[180px] h-[48px] 
-                     bg-[#00A8E8] text-white font-bold rounded-md">
+                     bg-[#00A8E8] text-white font-bold rounded-md hover:bg-[#0096cf]">
                     <?php the_sub_field('hero_button_text'); ?>
                   </a>
                 </div>
@@ -332,7 +332,7 @@ $zones = get_field('zones', $page_id);
             <a href="<?= esc_url($btn_link); ?>"
                class="inline-flex items-center justify-center 
                w-[180px] h-[48px] sm:w-[195px] sm:h-[52px] md:w-[205px] md:h-[56px] 
-               bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md">
+               bg-[#00A8E8] text-white text-sm sm:text-base font-bold rounded-md hover:bg-[#0096cf]">
               <?= esc_html($btn_text); ?>
             </a>
           </div>
@@ -445,7 +445,7 @@ $zones = get_field('zones', $page_id);
                 <textarea name="testimonial_content" id="testimonial_content" required class="w-full p-2 rounded-[10px] min-h-[120px] bg-[#495057] pl-4" placeholder="<?php pll_e("Text recenzie")?>"></textarea>
             </div>
             <div class="flex justify-center">
-                <input type="submit" value=<?php pll_e("Odoslať")?> class="bg-[#00A8E8] text-white font-bold px-20 py-2 rounded-[10px] hover:bg-orange-500 transition cursor-pointer" />
+                <input type="submit" value=<?php pll_e("Odoslať")?> class="bg-[#00A8E8] text-white font-bold px-20 py-2 rounded-[10px] hover:bg-[#0096cf] transition cursor-pointer" />
             </div>
         </form>
     <?php else: ?>
