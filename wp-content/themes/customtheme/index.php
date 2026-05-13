@@ -62,11 +62,11 @@
                   <?php the_sub_field('hero_title'); ?>
                 </h1>
 
-                <p class="text-white mt-4 text-base md:text-lg opacity-90 leading-relaxed">
+                <p class="text-white mt-6 text-base md:text-lg opacity-90 leading-relaxed">
                   <?php the_sub_field('hero_description'); ?>
                 </p>
 
-                <div class="mt-6 flex justify-center">
+                <div class="mt-8 flex justify-center">
                   <a href="<?php the_sub_field('hero_button_link'); ?>" 
                      class="inline-flex items-center justify-center w-[180px] h-[48px] 
                      bg-[#00A8E8] text-white font-bold rounded-md hover:bg-[#0096cf]">
@@ -83,7 +83,7 @@
 
                 <!-- LEFT TEXT -->
                 <div>
-                  <p class="text-[#00A8E8] uppercase text-sm mb-2">
+                  <p class="text-[#00A8E8] font-bold uppercase text-md mb-2">
                     <?php the_sub_field('announcement_label'); ?>
                   </p>
 
