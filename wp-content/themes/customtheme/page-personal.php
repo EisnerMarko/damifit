@@ -15,7 +15,9 @@ $persons = [
   <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-[30px] lg:gap-[10px] px-[20px] md:px-[40px] lg:px-[80px] text-white">
 
     <!-- TEXT -->
-    <div class="lg:col-start-2 lg:col-span-4">
+    <div class="<?= $person['reverse_layout']
+      ? 'lg:col-start-7 lg:col-span-5 lg:self-center'
+      : 'lg:col-start-1 lg:col-span-5 lg:row-start-1'; ?>">
 
       <p class="italic text-[16px] text-gray-300 mb-1">
         <?= $person['first_name']; ?>
@@ -32,10 +34,12 @@ $persons = [
     </div>
 
     <!-- IMAGES + CONTACT -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] md:gap-[30px] lg:gap-[10px] lg:col-start-7 lg:col-span-6 lg:self-center">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-[20px] md:gap-[30px] lg:gap-[10px] <?= $person['reverse_layout']
+      ? 'lg:col-start-1 lg:col-span-5 lg:row-start-1'
+      : 'lg:col-start-7 lg:col-span-5 lg:self-center'; ?>">
 
       <!-- LEFT -->
-      <div class="flex flex-col gap-[30px] md:gap-[40px] lg:gap-[50px]">
+      <div class="flex flex-col justify-center gap-[30px] md:gap-[40px] lg:gap-[50px]">
 
         <?php if(!empty($person['image_1'])): ?>
           <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
@@ -44,7 +48,7 @@ $persons = [
         <?php endif; ?>
 
         <div class="flex items-center gap-3 leading-none">
-        <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
+        <iconify-icon icon="ic:baseline-phone" class="text-[22px] md:text-[32px] text-white relative top-[1px]"></iconify-icon>
 
         <a
           href="tel:<?= preg_replace('/\s+/', '', $person['phone']); ?>"
@@ -56,7 +60,7 @@ $persons = [
       </div>
 
       <!-- RIGHT -->
-      <div class="flex flex-col gap-[30px] md:gap-[40px] lg:gap-[50px]">
+      <div class="flex flex-col justify-center gap-[30px] md:gap-[40px] lg:gap-[50px]">
 
         <?php if(!empty($person['image_2'])): ?>
           <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
@@ -65,7 +69,7 @@ $persons = [
         <?php endif; ?>
 
         <div class="flex items-center gap-3 leading-none">
-        <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white relative top-[1px]"></iconify-icon>
+        <iconify-icon icon="ic:outline-email" class="text-[22px] md:text-[32px] text-white relative top-[1px]"></iconify-icon>
 
         <a
           href="mailto:<?= $person['email']; ?>"
@@ -127,7 +131,7 @@ $persons = [
 
         <?php if(get_sub_field('phone')): ?>
         <div class="flex items-center gap-3">
-          <iconify-icon icon="ic:baseline-phone" class="w-[20px] h-[20px] text-white"></iconify-icon>
+          <iconify-icon icon="ic:baseline-phone" class="text-[22px] md:text-[32px] text-white"></iconify-icon>
 
           <a
             href="tel:<?= preg_replace('/\s+/', '', get_sub_field('phone')); ?>"
@@ -139,7 +143,7 @@ $persons = [
 
       <?php if(get_sub_field('email')): ?>
         <div class="flex items-center gap-3">
-          <iconify-icon icon="ic:outline-email" class="w-[20px] h-[20px] text-white"></iconify-icon>
+          <iconify-icon icon="ic:outline-email" class="text-[22px] md:text-[32px] text-white"></iconify-icon>
 
           <a
             href="mailto:<?= get_sub_field('email'); ?>"
@@ -151,7 +155,7 @@ $persons = [
 
       <?php if(get_sub_field('instagram') && get_sub_field('instagram_link')): ?>
         <div class="flex items-center gap-3">
-          <iconify-icon icon="mdi:instagram" class="w-[20px] h-[20px] text-white"></iconify-icon>
+          <iconify-icon icon="mdi:instagram" class="text-[22px] md:text-[32px] text-white"></iconify-icon>
 
           <a
             href="<?= get_sub_field('instagram_link'); ?>"
