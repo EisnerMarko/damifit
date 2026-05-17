@@ -28,7 +28,7 @@
   <link rel="icon" href="<?php echo get_template_directory_uri() . '/css/img/damifit_logo.png' ?>" type="image/png">
   <?php wp_head(); ?>
 </head>
-<body <?php body_class(); ?> class="w-full h-full">
+<body <?php body_class('w-full h-full'); ?>>
 
 <header class="w-full bg-[#212529]">
   <nav class="flex items-center justify-around h-16">

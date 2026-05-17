@@ -25,6 +25,17 @@ button, h1, h2, h3, h4, h5, h6, a{
   text-decoration: none;
 }
 
+/*woocommerce*/
+.woocommerce img, .woocommerce-page img{
+  height: revert-layer !important;
+}
+
+.woocommerce-breadcrumb {
+  padding-top: 15px !important;
+  margin-bottom: 20px !important;
+  font-size: 13px;
+}
+
 /* menu animation */
 @media (max-width: 767px) {
   #menu {
