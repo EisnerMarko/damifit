@@ -198,7 +198,7 @@
           <?php while ( $top_products->have_posts() ) : $top_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
             <a href="<?= esc_url( get_permalink() ); ?>" class="group block rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
               <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
-              <h3 class="text-white text-[18px] md:text-[20px] font-semibold mb-4 leading-tight">
+              <h3 class="text-white text-[16px] md:text-[20px] font-semibold mb-4 leading-tight">
                 <?= esc_html( get_the_title() ); ?>
               </h3>
               <div class="text-white text-[28px] md:text-[32px] font-bold mb-4">

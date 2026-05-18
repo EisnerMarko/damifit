@@ -8,9 +8,9 @@
   <?php if ( class_exists( 'WooCommerce' ) ) : ?>
     <?php
       $top_products = new WP_Query([
-        'post_type' => 'product',
-        'posts_per_page' => 5,
-        'tax_query' => [
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'tax_query'      => [
           [
             'taxonomy' => 'product_cat',
             'field'    => 'slug',
@@ -18,6 +18,9 @@
             'operator' => 'IN',
           ],
         ],
+        'meta_key'       => '_price',
+        'orderby'        => 'meta_value_num',
+        'order'          => 'ASC',
       ]);
 
       if ( ! $top_products->have_posts() ) {
@@ -40,23 +43,19 @@
           </h2>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
           <?php while ( $top_products->have_posts() ) : $top_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
             <a href="<?= esc_url( get_permalink() ); ?>" class="group block rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
               <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
-              <h3 class="text-white text-[18px] md:text-[20px] font-semibold mb-4 leading-tight">
+              <h3 class="text-white text-[16px] md:text-[20px] font-semibold mb-2 leading-tight">
                 <?= esc_html( get_the_title() ); ?>
               </h3>
-              <div class="text-white text-[28px] md:text-[32px] font-bold mb-4">
+              <div class="text-white text-[28px] md:text-[32px] mb-4">
                 <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
               </div>
-              <?php if ( $product && $product->get_short_description() ) : ?>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  <?= wp_kses_post( wp_trim_words( $product->get_short_description(), 16, '...' ) ); ?>
-                </p>
-              <?php else : ?>
-                <p class="text-gray-400 text-sm leading-relaxed">Začnite pracovať na sebe už dnes pre lepší zajtrajšok.</p>
-              <?php endif; ?>
+              <button class="bg-[#00A8E8] hover:bg-[#0088C0] text-white font-bold py-2 px-4 rounded-[10px] transition duration-300 cursor-pointer">
+                Zistiť viac
+              </button>
             </a>
           <?php endwhile; wp_reset_postdata(); ?>
         </div>
