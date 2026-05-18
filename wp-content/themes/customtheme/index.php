@@ -194,7 +194,9 @@
 
         <div class="text-center mb-[40px]">
           <h2 class="text-white text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-tight">
-            ZMENA
+            <?php if ( $text_under_hero = get_field( 'text_under_hero', $page_id ) ) : ?>
+              <?php echo esc_html( $text_under_hero ); ?>
+            <?php endif; ?>
           </h2>
         </div>
 
@@ -260,7 +262,7 @@
               <?php endif; ?>
               <div class="absolute inset-0 bg-black/40"></div>
               <div class="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
-                <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.35em] mb-3">DAMIFIT</p>
+                <p class="text-white text-[12px] uppercase tracking-[0.35em] mb-3">DAMIFIT</p>
                 <h3 class="text-white text-[28px] md:text-[34px] font-bold leading-tight">
                   <?= esc_html( get_the_title() ); ?>
                 </h3>
