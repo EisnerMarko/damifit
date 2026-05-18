@@ -344,139 +344,165 @@
 <?php
 $page_id = get_option('page_on_front');
 $zones = get_field('zones', $page_id);
+
+$all_zone_images = [];
+if (!empty($zones) && is_array($zones)) {
+    foreach ($zones as $zone) {
+        if (!empty($zone['gallery'])) {
+            foreach ($zone['gallery'] as $item) {
+                if (!empty($item['image']['url'])) {
+                    $all_zone_images[] = $item['image']['url'];
+                }
+            }
+        }
+    }
+}
 ?>
 
 <section class="pb-[30px] sm:pb-[50px] px-[20px] sm:px-[40px] lg:px-[80px] bg-[#212529]">
-
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-[10px]">
-
-    <?php if(!empty($zones) && is_array($zones)): ?>
-      
-      <?php foreach($zones as $index => $zone): ?>
-
-        <div class="sm:col-span-1 lg:col-span-4">
-  <div 
-    class="zone-card cursor-pointer relative rounded-[10px] overflow-hidden group"
-    data-index="<?= $index; ?>"
-  >
-
-    <?php if(!empty($zone['thumbnail'])): ?>
-      <img 
-        src="<?= esc_url($zone['thumbnail']['url']); ?>" 
-        class="w-full h-[180px] sm:h-[220px] lg:h-[254px] object-cover opacity-50 group-hover:opacity-100 transition duration-300 pointer-events-none"
-      >
-    <?php endif; ?>
-
-    <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold z-10">
-      <?= esc_html($zone['title']); ?>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-[10px]">
+        <?php if (!empty($zones) && is_array($zones)): ?>
+            <?php foreach ($zones as $index => $zone): ?>
+                <div class="sm:col-span-1 lg:col-span-4">
+                    <div 
+                        class="zone-card cursor-pointer relative rounded-[10px] overflow-hidden group"
+                        data-index="<?= $index; ?>"
+                    >
+                        <?php if (!empty($zone['thumbnail'])): ?>
+                            <img 
+                                src="<?= esc_url($zone['thumbnail']['url']); ?>" 
+                                class="w-full h-[180px] sm:h-[220px] lg:h-[254px] object-cover opacity-50 group-hover:opacity-100 transition duration-300 pointer-events-none"
+                            >
+                        <?php endif; ?>
+                        <div class="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold z-10">
+                            <?= esc_html($zone['title']); ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </div>
-
-  </div>
-</div>
-
-      <?php endforeach; ?>
-
-    <?php endif; ?>
-
-  </div>
-
 </section>
 
 <div id="zone-modal" class="hidden fixed inset-0 z-50 bg-[#1E1E1E]/90 overflow-y-auto flex justify-center pt-16">
 
-  <div class="bg-[#1E1E1E] px-4 py-8 rounded-lg shadow-lg w-[90%] h-fit">
+    <div class="bg-[#1E1E1E] px-4 py-8 rounded-lg shadow-lg w-[90%] h-fit">
+        <button id="zone-close" class="fixed top-[10%] right-[10%] text-white text-5xl z-50 cursor-pointer">
+            ×
+        </button>
+        <?php
+        $globalImageIndex = 0;
+        ?>
+        <?php foreach ($zones as $index => $zone): ?>
+            <div class="zone-detail hidden" data-index="<?= $index; ?>">
+                <div class="grid grid-cols-12 gap-y-[30px] lg:gap-x-[60px] items-start">
+                    <!-- LEFT -->
+                    <div class="col-span-12 lg:col-span-6">
+                        <?php if (!empty($zone['gallery'])): ?>
+                            <?php $first = $zone['gallery'][0]['image']; ?>
+                            <!-- BIG IMAGE -->
+                            <img 
+                                src="<?= esc_url($first['url']); ?>" 
+                                class="zone-main-image w-[80%] lg:w-full h-[220px] sm:h-[340px] lg:h-[420px] object-cover rounded-[10px] mb-4"
+                            >
+                            <!-- THUMBS -->
+                            <div class="flex gap-[8px] sm:gap-[10px] flex-wrap">
+                                <?php foreach ($zone['gallery'] as $i => $item): ?>
+                                    <?php $img = $item['image']; ?>
+                                    <img 
+                                        src="<?= esc_url($img['url']); ?>" 
+                                        data-full="<?= esc_url($img['url']); ?>"
+                                        data-global-index="<?= $globalImageIndex; ?>"
+                                        class="gallery-image zone-thumb w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] lg:w-[97px] lg:h-[97px] object-cover rounded-[8px] opacity-60 hover:opacity-100 cursor-pointer transition"
+                                    >
+                                    <?php $globalImageIndex++; ?>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
 
-    <!-- CLOSE -->
-    <button id="zone-close" class="fixed top-[10%] right-[10%] text-white text-5xl z-50 cursor-pointer">
-      x
+                    <!-- RIGHT -->
+                    <div class="col-span-12 lg:col-span-6">
+                        <h2 class="text-white text-[26px] sm:text-[36px] lg:text-[48px] font-bold mb-2 leading-tight">
+                            <?= esc_html($zone['title']); ?>
+                        </h2>
+                        <p class="text-white text-[14px] sm:text-[16px] mb-4 leading-relaxed">
+                            <?= esc_html($zone['description']); ?>
+                        </p>
+                        <h3 class="text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold">
+                            <?= esc_html($zone['subtitle']); ?>
+                        </h3>
+                        <p class="text-white text-[14px] sm:text-[16px] whitespace-pre-line leading-relaxed">
+                            <?= esc_html($zone['equipment']); ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>
+
+<div id="galleryModal" class="fixed inset-0 bg-[#00000099] hidden z-[999] flex items-center justify-center p-10">
+    <button class="absolute top-12 right-12 text-white text-4xl font-bold close-button cursor-pointer">
+        ×
     </button>
 
-    <?php foreach($zones as $index => $zone): ?>
+    <button class="absolute left-8 text-white text-4xl font-bold prev-button cursor-pointer">
+        ‹
+    </button>
 
-      <div class="zone-detail hidden" data-index="<?= $index; ?>">
+    <img
+        id="modalImage"
+        src=""
+        alt="Gallery Image"
+        class="max-w-full max-h-full object-contain rounded-xl"
+    >
 
-        <div class="grid grid-cols-12 gap-y-[30px] lg:gap-x-[60px] items-start">
-
-          <!-- LEFT -->
-<div class="col-span-12 lg:col-span-6">
-
-<?php if(!empty($zone['gallery'])): ?>
-
-  <?php $first = $zone['gallery'][0]['image']; ?>
-
-  <!-- BIG IMAGE -->
-  <img 
-    src="<?= esc_url($first['url']); ?>" 
-    data-index="0"
-    data-full="<?= esc_url($first['url']); ?>"
-    class="zone-image zone-main-image w-[80%] lg:w-full h-[220px] sm:h-[340px] lg:h-[420px] object-cover rounded-[10px] mb-4 cursor-pointer"
-  >
-
-  <!-- THUMBS -->
-  <div class="flex gap-[8px] sm:gap-[10px] flex-wrap">
-
-    <?php foreach($zone['gallery'] as $i => $item): ?>
-      <?php $img = $item['image']; ?>
-
-      <img 
-        src="<?= esc_url($img['url']); ?>" 
-        data-index="<?= $i; ?>"
-        data-full="<?= esc_url($img['url']); ?>"
-        class="zone-image zone-thumb w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] lg:w-[97px] lg:h-[97px] object-cover rounded-[8px] opacity-60 hover:opacity-100 cursor-pointer transition"
-      >
-
-    <?php endforeach; ?>
-
-  </div>
-
-<?php endif; ?>
-
-</div>
-          <!-- RIGHT -->
-          <div class="col-span-12 lg:col-span-6">
-
-            <h2 class="text-white text-[26px] sm:text-[36px] lg:text-[48px] font-bold mb-2 leading-tight">
-              <?= esc_html($zone['title']); ?>
-            </h2>
-
-            <p class="text-white text-[14px] sm:text-[16px] mb-4 leading-relaxed">
-              <?= esc_html($zone['description']); ?>
-            </p>
-
-            <h3 class="text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold">
-              <?= esc_html($zone['subtitle']); ?>
-            </h3>
-
-            <p class="text-white text-[14px] sm:text-[16px] whitespace-pre-line leading-relaxed">
-              <?= esc_html($zone['equipment']); ?>
-            </p>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    <?php endforeach; ?>
-
-  </div>
+    <button class="absolute right-8 text-white text-4xl font-bold next-button cursor-pointer">
+        ›
+    </button>
 </div>
 
-<div id="lightbox" class="hidden fixed inset-0 bg-black/90 z-[999] flex items-center justify-center">
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const zoneCards = document.querySelectorAll('.zone-card');
+    const zoneModal = document.getElementById('zone-modal');
+    const zoneClose = document.getElementById('zone-close');
+    const zoneDetails = document.querySelectorAll('.zone-detail');
+    zoneCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const index = card.dataset.index;
+            zoneModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+            zoneDetails.forEach(detail => {
+                detail.classList.add('hidden');
+            });
+            document
+                .querySelector(`.zone-detail[data-index="${index}"]`)
+                .classList.remove('hidden');
+        });
+    });
+    zoneClose.addEventListener('click', () => {
+        zoneModal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden');
+    });
 
-  <!-- CLOSE -->
-  <button id="lightbox-close" class="absolute top-6 right-6 text-white text-4xl">×</button>
+    const imagesArray = <?php echo json_encode($all_zone_images); ?>;
+    const gallery = createImageGallery(
+        'galleryModal',
+        imagesArray
+    );
 
-  <!-- PREV -->
-  <button id="lightbox-prev" class="absolute left-6 text-white text-4xl">←</button>
-
-  <!-- IMAGE -->
-  <img id="lightbox-img" class="max-w-[90%] max-h-[90%] rounded-lg">
-
-  <!-- NEXT -->
-  <button id="lightbox-next" class="absolute right-6 text-white text-4xl">→</button>
-
-</div>
+    document.querySelectorAll('.gallery-image').forEach(image => {
+        image.addEventListener('click', () => {
+            const index = parseInt(
+                image.dataset.globalIndex
+            );
+            gallery.openModal(index);
+        });
+    });
+});
+</script>
 
 <section class="flex flex-col items-center text-center justify-center px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
         <?php if($testimonials_title = get_field('testimonials_title', $page_id)): ?>

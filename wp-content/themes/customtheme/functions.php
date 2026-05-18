@@ -15,6 +15,14 @@ function enqueue_theme_assets() {
         filemtime(get_template_directory() . '/js/scrollTo.js'),
         true
     );
+
+    wp_enqueue_script(
+        'imgGallery',
+        get_template_directory_uri() . '/js/imgGallery.js',
+        array(),
+        filemtime(get_template_directory() . '/js/imgGallery.js'),
+        true
+    );
 }
 add_action('wp_enqueue_scripts', 'enqueue_theme_assets');
 
