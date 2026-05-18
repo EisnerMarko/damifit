@@ -41,7 +41,7 @@
     <div id="menu" class="md:flex absolute md:static top-16 left-0 w-full md:w-auto md:bg-transparent shadow md:shadow-none z-20">
     <ul class="flex flex-col items-center md:flex-row bg-[#212529] uppercase text-white md:space-x-6 px-4 pb-4 md:px-0 md:pb-0">
   <li class="text-base font-bold p-2 md:p-0 hover:text-[#00A8E8]">
-    <a href="<?php echo esc_url(get_permalink(get_page_by_path('cennik'))); ?>">Cenník</a>
+    <a href="<?php echo esc_url(get_permalink(get_page_by_path('shop'))); ?>">Cenník</a>
   </li>
 
   <li class="text-base font-bold p-2 md:p-0 hover:text-[#00A8E8]">
@@ -60,7 +60,10 @@
     <a href="<?php echo esc_url(get_permalink(get_page_by_path('damifood'))); ?>">DamiFood</a>
   </li>
 
-  <a href="#" aria-label="Shopping Cart" class="text-white hover:text-[#00A8E8] text-4xl ml-0 lg:ml-40">
+  <?php
+    $cart_url = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : '#';
+  ?>
+  <a href="<?php echo esc_url( $cart_url ); ?>" aria-label="Shopping Cart" class="text-white hover:text-[#00A8E8] text-4xl ml-0 lg:ml-40">
     <span class="iconify" data-icon="majesticons:shopping-cart-line"></span>
   </a>
 </ul>
