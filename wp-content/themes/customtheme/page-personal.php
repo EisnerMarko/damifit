@@ -42,8 +42,12 @@ $persons = [
       <div class="flex flex-col justify-center gap-[30px] md:gap-[40px] lg:gap-[50px]">
 
         <?php if(!empty($person['image_1'])): ?>
-          <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
-            <img src="<?= $person['image_1']['url']; ?>" class="w-full h-full object-cover">
+          <div class="js-gallery">
+            <?php if(!empty($person['image_1'])): ?>
+              <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
+                <img src="<?= $person['image_1']['url']; ?>" class="w-full h-full object-cover">
+              </div>
+            <?php endif; ?>
           </div>
         <?php endif; ?>
 
@@ -63,8 +67,12 @@ $persons = [
       <div class="flex flex-col justify-center gap-[30px] md:gap-[40px] lg:gap-[50px]">
 
         <?php if(!empty($person['image_2'])): ?>
-          <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
-            <img src="<?= $person['image_2']['url']; ?>" class="w-full h-full object-cover">
+          <div class="js-gallery">
+            <?php if(!empty($person['image_2'])): ?>
+              <div class="h-[200px] md:h-[220px] lg:h-[181px] rounded-[10px] overflow-hidden">
+                <img src="<?= $person['image_2']['url']; ?>" class="w-full h-full object-cover">
+              </div>
+            <?php endif; ?>
           </div>
         <?php endif; ?>
 
@@ -180,7 +188,48 @@ $persons = [
   </div>
 
 </section>
-
 <?php endif; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modalId = 'galleryModal';
+    let currentImages = [];
+    let instance = null;
+
+    document.querySelectorAll('.js-gallery').forEach(gallery => {
+        const images = Array.from(gallery.querySelectorAll('img')).map(img => img.src);
+
+        gallery.querySelectorAll('img').forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => {
+                currentImages = images;
+                instance = createImageGallery(modalId, currentImages);
+                instance.openModal(index);
+            });
+        });
+    });
+});
+</script>
+<div id="galleryModal" class="fixed inset-0 bg-[#00000099] hidden z-[999] flex items-center justify-center p-10">
+    <button class="absolute top-12 right-12 text-white text-4xl font-bold close-button cursor-pointer">
+        ×
+    </button>
+
+    <button class="absolute left-8 text-white text-4xl font-bold prev-button cursor-pointer">
+        ‹
+    </button>
+
+    <img
+        id="modalImage"
+        src=""
+        alt="Gallery Image"
+        class="max-w-full max-h-full object-contain rounded-xl"
+    >
+
+    <button class="absolute right-8 text-white text-4xl font-bold next-button cursor-pointer">
+        ›
+    </button>
+</div>
+
 </main>
 <?php get_footer(); ?>

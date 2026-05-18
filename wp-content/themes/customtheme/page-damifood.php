@@ -79,7 +79,7 @@
           <?php if($layout === 'reverse' && $gallery): ?>
   
             <!-- IMAGES -->
-            <div class="grid grid-cols-2 gap-[10px]">
+            <div class="grid grid-cols-2 gap-[10px] js-gallery">
   
               <?php foreach($gallery as $image): ?>
   
@@ -110,7 +110,7 @@
           <?php if($layout === 'normal' && $gallery): ?>
   
             <!-- IMAGES -->
-            <div class="grid grid-cols-2 gap-[10px]">
+            <div class="grid grid-cols-2 gap-[10px] js-gallery">
   
               <?php foreach($gallery as $image): ?>
   
@@ -151,7 +151,7 @@
             <!-- IMAGES -->
             <div class="col-span-6">
   
-              <div class="grid grid-cols-2 gap-[10px]">
+              <div class="grid grid-cols-2 gap-[10px] js-gallery">
   
                 <?php if($gallery): ?>
                   <?php foreach($gallery as $image): ?>
@@ -173,7 +173,7 @@
             <!-- IMAGES -->
             <div class="col-span-6">
   
-              <div class="grid grid-cols-2 gap-[10px]">
+              <div class="grid grid-cols-2 gap-[10px] js-gallery">
   
                 <?php if($gallery): ?>
                   <?php foreach($gallery as $image): ?>
@@ -451,5 +451,46 @@
   </div>
 
 </section>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modalId = 'galleryModal';
+    let globalImages = [];
+    let globalInstance = null;
+
+    document.querySelectorAll('.js-gallery').forEach(gallery => {
+        const images = Array.from(gallery.querySelectorAll('img')).map(img => img.src);
+        const imgs = gallery.querySelectorAll('img');
+
+        imgs.forEach((img, index) => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', () => {
+                globalImages = images;
+                globalInstance = createImageGallery(modalId, globalImages);
+                globalInstance.openModal(index);
+            });
+        });
+    });
+});
+</script>
+<div id="galleryModal" class="fixed inset-0 bg-[#00000099] hidden z-[999] flex items-center justify-center p-10">
+    <button class="absolute top-12 right-12 text-white text-4xl font-bold close-button cursor-pointer">
+        ×
+    </button>
+
+    <button class="absolute left-8 text-white text-4xl font-bold prev-button cursor-pointer">
+        ‹
+    </button>
+
+    <img
+        id="modalImage"
+        src=""
+        alt="Gallery Image"
+        class="max-w-full max-h-full object-contain rounded-xl"
+    >
+
+    <button class="absolute right-8 text-white text-4xl font-bold next-button cursor-pointer">
+        ›
+    </button>
+</div>
 </main>
 <?php get_footer(); ?>
