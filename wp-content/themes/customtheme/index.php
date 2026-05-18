@@ -380,13 +380,13 @@ $zones = get_field('zones', $page_id);
 
 </section>
 
-<div id="zone-modal" class="hidden fixed inset-0 bg-[#1E1E1E] z-50 overflow-y-auto">
+<div id="zone-modal" class="hidden fixed inset-0 z-50 bg-[#1E1E1E]/90 overflow-y-auto flex justify-center pt-16">
 
-  <div class="px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
+  <div class="bg-[#1E1E1E] px-4 py-8 rounded-lg shadow-lg w-[90%] h-fit">
 
     <!-- CLOSE -->
-    <button id="zone-close" class="fixed top-4 right-4 sm:top-6 sm:right-6 text-white text-3xl sm:text-4xl z-50 cursor-pointer">
-      ×
+    <button id="zone-close" class="fixed top-[10%] right-[10%] text-white text-5xl z-50 cursor-pointer">
+      x
     </button>
 
     <?php foreach($zones as $index => $zone): ?>
@@ -407,7 +407,7 @@ $zones = get_field('zones', $page_id);
     src="<?= esc_url($first['url']); ?>" 
     data-index="0"
     data-full="<?= esc_url($first['url']); ?>"
-    class="zone-image zone-main-image w-full h-[220px] sm:h-[280px] lg:h-[316px] object-cover rounded-[10px] mb-4 cursor-pointer"
+    class="zone-image zone-main-image w-[80%] lg:w-full h-[220px] sm:h-[340px] lg:h-[420px] object-cover rounded-[10px] mb-4 cursor-pointer"
   >
 
   <!-- THUMBS -->
@@ -433,15 +433,15 @@ $zones = get_field('zones', $page_id);
           <!-- RIGHT -->
           <div class="col-span-12 lg:col-span-6">
 
-            <h2 class="text-white text-[26px] sm:text-[36px] lg:text-[48px] font-bold mb-4 sm:mb-6 leading-tight">
+            <h2 class="text-white text-[26px] sm:text-[36px] lg:text-[48px] font-bold mb-2 leading-tight">
               <?= esc_html($zone['title']); ?>
             </h2>
 
-            <p class="text-white text-[14px] sm:text-[16px] mb-5 sm:mb-6 leading-relaxed">
+            <p class="text-white text-[14px] sm:text-[16px] mb-4 leading-relaxed">
               <?= esc_html($zone['description']); ?>
             </p>
 
-            <h3 class="text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold mb-3 sm:mb-4">
+            <h3 class="text-white text-[16px] sm:text-[18px] lg:text-[20px] font-bold">
               <?= esc_html($zone['subtitle']); ?>
             </h3>
 
