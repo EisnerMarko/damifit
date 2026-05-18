@@ -7,7 +7,7 @@
 
   <?php if ( class_exists( 'WooCommerce' ) ) : ?>
     <?php
-      $top_products = new WP_Query([
+      $perms_products = new WP_Query([
         'post_type'      => 'product',
         'posts_per_page' => -1,
         'tax_query'      => [
@@ -23,39 +23,43 @@
         'order'          => 'ASC',
       ]);
 
-      if ( ! $top_products->have_posts() ) {
+      if ( ! $perms_products->have_posts() ) {
         wp_reset_postdata();
-        $top_products = new WP_Query([
+        $perms_products = new WP_Query([
           'post_type' => 'product',
-          'posts_per_page' => 5,
+          'posts_per_page' => -1,
           'orderby' => 'date',
           'order' => 'DESC',
         ]);
       }
     ?>
 
-    <?php if ( $top_products->have_posts() ) : ?>
+    <?php if ( $perms_products->have_posts() ) : ?>
       <section class="px-[20px] sm:px-[40px] lg:px-[80px] pt-20">
 
         <div class="text-center mb-[40px]">
           <h2 class="text-white text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-tight">
-            ZMENA
+            Vstupy a permanentky
           </h2>
         </div>
 
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          <?php while ( $top_products->have_posts() ) : $top_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
-            <a href="<?= esc_url( get_permalink() ); ?>" class="group block rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
-              <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
-              <h3 class="text-white text-[16px] md:text-[20px] font-semibold mb-2 leading-tight">
-                <?= esc_html( get_the_title() ); ?>
-              </h3>
-              <div class="text-white text-[28px] md:text-[32px] mb-4">
-                <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
+          <?php while ( $perms_products->have_posts() ) : $perms_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
+            <a href="<?= esc_url( get_permalink() ); ?>" class="group block h-full flex flex-col rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
+              <div class="mb-2">
+                <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
+                <h3 class="text-white text-[16px] md:text-[20px] font-semibold leading-tight">
+                  <?= esc_html( get_the_title() ); ?>
+                </h3>
               </div>
-              <button class="bg-[#00A8E8] hover:bg-[#0088C0] text-white font-bold py-2 px-4 rounded-[10px] transition duration-300 cursor-pointer">
-                Zistiť viac
-              </button>
+              <div class="mt-auto flex flex-col lg:flex-row items-start lg:items-center lg:justify-between">
+                <div class="text-white text-[28px] md:text-[32px]">
+                  <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
+                </div>
+                <button class="bg-[#00A8E8] hover:bg-[#0088C0] text-white font-bold py-2 px-4 rounded-[10px] transition duration-300 cursor-pointer">
+                  Zistiť viac
+                </button>
+              </div>
             </a>
           <?php endwhile; wp_reset_postdata(); ?>
         </div>
@@ -65,12 +69,12 @@
     <?php
       $plan_products = new WP_Query([
         'post_type' => 'product',
-        'posts_per_page' => 2,
+        'posts_per_page' => 4,
         'tax_query' => [
           [
             'taxonomy' => 'product_cat',
             'field'    => 'slug',
-            'terms'    => ['stravovaci-plan', 'meal-plan', 'plans'],
+            'terms'    => ['stravovacie-plany'],
             'operator' => 'IN',
           ],
         ],
@@ -80,7 +84,7 @@
         wp_reset_postdata();
         $plan_products = new WP_Query([
           'post_type' => 'product',
-          'posts_per_page' => 2,
+          'posts_per_page' => 4,
           'orderby' => 'date',
           'order' => 'DESC',
         ]);
@@ -89,6 +93,11 @@
 
     <?php if ( $plan_products->have_posts() ) : ?>
       <section class="px-[20px] sm:px-[40px] lg:px-[80px] mt-[30px] mb-20">
+        <div class="text-center my-8">
+          <h2 class="text-white text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-tight">
+            Stravovacie plány
+          </h2>
+        </div>
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
           <?php while ( $plan_products->have_posts() ) : $plan_products->the_post(); $image = get_the_post_thumbnail_url( get_the_ID(), 'large' ); ?>
             <a href="<?= esc_url( get_permalink() ); ?>" class="group block relative overflow-hidden rounded-[20px] min-h-[240px] bg-[#1E1E1E] shadow-lg">
@@ -108,6 +117,56 @@
       </section>
     <?php endif; ?>
   <?php endif; ?>
+
+  <?php
+      $train_products = new WP_Query([
+        'post_type' => 'product',
+        'posts_per_page' => 8,
+        'tax_query' => [
+          [
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => ['osobne-treningy'],
+            'operator' => 'IN',
+          ],
+        ],
+      ]);
+
+      if ( ! $train_products->have_posts() ) {
+        wp_reset_postdata();
+        $train_products = new WP_Query([
+          'post_type' => 'product',
+          'posts_per_page' => 8,
+          'orderby' => 'random',
+        ]);
+      }
+    ?>
+
+    <?php if ( $train_products->have_posts() ) : ?>
+      <section class="px-[20px] sm:px-[40px] lg:px-[80px] mt-[30px] mb-20">
+        <div class="text-center my-8">
+          <h2 class="text-white text-[32px] md:text-[40px] lg:text-[48px] font-bold leading-tight">
+            Osobné tréningy
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <?php while ( $train_products->have_posts() ) : $train_products->the_post(); $image = get_the_post_thumbnail_url( get_the_ID(), 'large' ); ?>
+            <a href="<?= esc_url( get_permalink() ); ?>" class="group block relative overflow-hidden rounded-[20px] min-h-[240px] bg-[#1E1E1E] shadow-lg">
+              <?php if ( $image ) : ?>
+                <img src="<?= esc_url( $image ); ?>" class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" alt="<?= esc_attr( get_the_title() ); ?>">
+              <?php endif; ?>
+              <div class="absolute inset-0 bg-black/40"></div>
+              <div class="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+                <p class="text-white text-[12px] uppercase tracking-[0.35em] mb-3">DAMIFIT</p>
+                <h3 class="text-white text-[28px] md:text-[34px] font-bold leading-tight">
+                  <?= esc_html( get_the_title() ); ?>
+                </h3>
+              </div>
+            </a>
+          <?php endwhile; wp_reset_postdata(); ?>
+        </div>
+      </section>
+    <?php endif; ?>
 
     <section class="flex flex-col items-center text-center justify-center px-[20px] sm:px-[40px] lg:px-[80px] py-[40px] lg:py-[80px]">
         <?php if($testimonials_title = get_field('testimonials_title', $page_id)): ?>

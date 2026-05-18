@@ -172,6 +172,9 @@
             'operator' => 'IN',
           ],
         ],
+        'meta_key'       => '_price',
+        'orderby'        => 'meta_value_num',
+        'order'          => 'ASC',
       ]);
 
       if ( ! $top_products->have_posts() ) {
@@ -179,7 +182,8 @@
         $top_products = new WP_Query([
           'post_type' => 'product',
           'posts_per_page' => 5,
-          'orderby' => 'date',
+          'meta_key' => '_price',
+          'orderby' => 'meta_value_num',
           'order' => 'DESC',
         ]);
       }
@@ -196,21 +200,25 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-5">
           <?php while ( $top_products->have_posts() ) : $top_products->the_post(); $product = wc_get_product( get_the_ID() ); ?>
-            <a href="<?= esc_url( get_permalink() ); ?>" class="group block rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
-              <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
-              <h3 class="text-white text-[16px] md:text-[20px] font-semibold mb-4 leading-tight">
-                <?= esc_html( get_the_title() ); ?>
-              </h3>
-              <div class="text-white text-[28px] md:text-[32px] font-bold mb-4">
-                <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
+            <a href="<?= esc_url( get_permalink() ); ?>" class="group block h-full flex flex-col rounded-[20px] border border-white/10 bg-[#212529] p-[24px] transition duration-300 hover:-translate-y-1 hover:border-[#00A8E8] hover:bg-[#1B2430]">
+              <div class="mb-4">
+                <p class="text-[#00A8E8] text-[12px] uppercase tracking-[0.3em] mb-2">DAMIFIT</p>
+                <h3 class="text-white text-[16px] md:text-[20px] font-semibold leading-tight">
+                  <?= esc_html( get_the_title() ); ?>
+                </h3>
               </div>
-              <?php if ( $product && $product->get_short_description() ) : ?>
-                <p class="text-gray-300 text-sm leading-relaxed">
-                  <?= wp_kses_post( wp_trim_words( $product->get_short_description(), 16, '...' ) ); ?>
-                </p>
-              <?php else : ?>
-                <p class="text-gray-400 text-sm leading-relaxed">Začnite pracovať na sebe už dnes pre lepší zajtrajšok.</p>
-              <?php endif; ?>
+              <div class="mt-auto">
+                <div class="text-white text-[28px] md:text-[32px] font-bold mb-4">
+                  <?= wp_kses_post( $product ? $product->get_price_html() : '' ); ?>
+                </div>
+                <?php if ( $product && $product->get_short_description() ) : ?>
+                  <p class="text-gray-300 text-sm leading-relaxed">
+                    <?= wp_kses_post( wp_trim_words( $product->get_short_description(), 16, '...' ) ); ?>
+                  </p>
+                <?php else : ?>
+                  <p class="text-gray-400 text-sm leading-relaxed">Začnite pracovať na sebe už dnes pre lepší zajtrajšok.</p>
+                <?php endif; ?>
+              </div>
             </a>
           <?php endwhile; wp_reset_postdata(); ?>
         </div>
@@ -225,7 +233,7 @@
           [
             'taxonomy' => 'product_cat',
             'field'    => 'slug',
-            'terms'    => ['stravovaci-plan', 'meal-plan', 'plans'],
+            'terms'    => ['stravovacie-plany'],
             'operator' => 'IN',
           ],
         ],
